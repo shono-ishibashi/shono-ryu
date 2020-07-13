@@ -15,12 +15,20 @@ public class IntermediateService {
     @Autowired
     private IntermediateRepository intermediateRepository;
 
+    /**
+     *
+     * @return
+     */
+
     public List<Article> intermediateFindAll(){
         Article article = new Article();
         List<Article> intermediateList = new ArrayList<>();
         List<Comment> commentList = new ArrayList<>();
 
-        List<Article> intermediateList2 = new ArrayList<>();// 新しく詰め直す用
+        /**
+         *  新しく詰め直すリストを作成
+         */
+        List<Article> intermediateList2 = new ArrayList<>();
 
         intermediateList = intermediateRepository.findAll();
 
@@ -38,12 +46,18 @@ public class IntermediateService {
                 article.setComments(commentList);
                 intermediateList2.add(article);
 
-                article = new Article();//初期化
+                /**
+                 *  初期化
+                 */
+                article = new Article();
                 article.setId(intermediateList.get(i).getId());
                 article.setName(intermediateList.get(i).getName());
                 article.setContent(intermediateList.get(i).getContent());
 
-                commentList = new ArrayList<>();//初期化
+                /**
+                 *  初期化
+                 */
+                commentList = new ArrayList<>();
                 commentList.addAll(intermediateList.get(i).getComments());
                 article.setComments(commentList);
 

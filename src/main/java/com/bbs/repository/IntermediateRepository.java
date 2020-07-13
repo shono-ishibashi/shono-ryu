@@ -13,11 +13,23 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * articles,commentsテーブルを操作するリポジトリ.
+ *
+ * @author ryukanjiro
+ *
+ */
+
+
 @Repository
 public class IntermediateRepository {
 
     @Autowired
     private NamedParameterJdbcTemplate template;
+
+    /**
+     * Articleオブジェクトを生成するローマッパー
+     */
 
     private static final RowMapper<Article> INTERMEDIATE_ROW_MAPPER = (rs, i)-> {
 
@@ -44,6 +56,11 @@ public class IntermediateRepository {
     };
 
 
+    /**
+     *
+     * @return
+     */
+
     public List<Article> findAll() {
 
         List<Article> intermediateList = new ArrayList<>();
@@ -59,6 +76,11 @@ public class IntermediateRepository {
         return intermediateList;
     }
 
+    /**
+     * 記事内容をインサート
+     * @param article 記事情報
+     */
+
     public void ArticleInsert(Article article) {
 
         String insSql = "INSERT INTO articles (name, content) VALUES (:name , :content) ";
@@ -68,6 +90,11 @@ public class IntermediateRepository {
         template.update(insSql, param);
 
     }
+
+    /**
+     * 記事内容をデリート
+     * @param id 記事情報のid
+     */
 
     public void ArticleDeleteById(int id) {
 
@@ -79,6 +106,11 @@ public class IntermediateRepository {
 
     }
 
+    /**
+     * コメント内容をインサート
+     * @param comment
+     */
+
     public void CommentsInsert(Comment comment) {
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
@@ -88,6 +120,12 @@ public class IntermediateRepository {
         template.update(insSql, param);
 
     }
+
+
+    /**
+     * 記事内容をデリート
+     * @param articleId
+     */
 
     public void CommentsDeleteById(int articleId) {
 
