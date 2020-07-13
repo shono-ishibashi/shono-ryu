@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public class ArticleRepository {
 
-
+    @Autowired
     private NamedParameterJdbcTemplate template;
 
     private static final RowMapper<Article> ARTICLE_ROW_MAPPER = (rs, i) ->{
