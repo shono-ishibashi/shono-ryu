@@ -1,4 +1,4 @@
-package com.bbs.repository;
+package com.bbs.service;
 
 import com.bbs.domain.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,19 +7,21 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Repository
-public class CommentRepository {
+@Service
+public class CommentService {
 
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    private static final RowMapper<Comment> COMMENT_ROW_MAPPER = (rs, i) -> {
+    @Autowired
+    private CommentService commentService;
+
+    private final static RowMapper<Comment> COMMENT_ROW_MAPPER = (rs, i) -> {
 
         Comment comment = new Comment();
 
@@ -27,11 +29,11 @@ public class CommentRepository {
         comment.setName(rs.getString("name"));
         comment.setContent(rs.getString("content"));
         comment.setArticleId(rs.getInt("article_id"));
-        return comment;
 
+        return comment;
     };
 
-    public List<Comment> findByArticleId(int articleId) {
+    public List<Comment> findByArticleId(int articleId){
 
         List<Comment> commentList = new ArrayList<>();
 
@@ -42,7 +44,9 @@ public class CommentRepository {
         commentList = template.query(findIdSql, param, COMMENT_ROW_MAPPER);
 
         return commentList;
-    }
+
+    };
+
 
     public void Insert(Comment comment) {
 
@@ -64,8 +68,8 @@ public class CommentRepository {
 
     }
 
+
+
+
+
 }
-
-
-
-
