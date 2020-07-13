@@ -39,6 +39,7 @@
         </tr>
     </table>
     <form th:action="@{insert-comment}" th:object="${commentForm}">
+        <input type="hidden" name = articleId th:value="${article.id}">
         <input type="text" th:field="*{name}">
         <textarea th:field="*{content}"></textarea>
         <input type="submit" value="コメント投稿">

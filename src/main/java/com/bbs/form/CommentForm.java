@@ -7,4 +7,5 @@ public class CommentForm {
     private Integer id;
     private String name;
     private String content;
+    private Integer articleId;
 }

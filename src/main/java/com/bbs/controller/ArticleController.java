@@ -1,9 +1,12 @@
 package com.bbs.controller;
 
 import com.bbs.domain.Article;
+import com.bbs.domain.Comment;
 import com.bbs.form.ArticleForm;
 import com.bbs.form.CommentForm;
 import com.bbs.service.ArticleService;
+import com.bbs.service.CommentService;
+import com.bbs.service.IntermediateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,12 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private IntermediateService intermediateService;
+
+    @Autowired
+    private CommentService commentService;
+
     @ModelAttribute
     public ArticleForm setUpArticleFrom(){
         return new ArticleForm();
@@ -32,7 +41,7 @@ public class ArticleController {
 
     @RequestMapping("")
     public String index(Model model){
-        List<Article> articleList = articleService.findAll();
+        List<Article> articleList = intermediateService.intermediateFindAll();
         model.addAttribute("articleList", articleList);
         return "bbs";
     }
@@ -60,11 +69,21 @@ public class ArticleController {
             @PathVariable ("id")
             String id,Model model){
 
-        try {
-            articleService.DeleteById(Integer.parseInt(id));
-        }catch (Exception e) {
 
-        }
+        articleService.DeleteById(Integer.parseInt(id));
+
+        return index(model);
+    }
+
+    @RequestMapping("insert-comment")
+    public String insertContent(CommentForm commentForm,Model model){
+        Comment comment = new Comment();
+        comment.setName(commentForm.getName());
+        comment.setContent(commentForm.getContent());
+        comment.setArticleId(commentForm.getArticleId());
+
+        commentService.Insert(comment);
+
         return index(model);
     }
 }

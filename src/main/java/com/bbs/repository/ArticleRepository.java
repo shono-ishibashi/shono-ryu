@@ -56,7 +56,9 @@ public class ArticleRepository {
 
     public void deleteById(int id) {
 
-        String delSql = "DELETE FROM articles WHERE id = :id ";
+        String delSql =
+                "DELETE FROM comments WHERE article_id = :id;" +
+                "DELETE FROM articles WHERE id = :id ;";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
