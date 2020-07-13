@@ -3,9 +3,8 @@ package com.bbs.form;
 import lombok.Data;
 
 @Data
-public class ArticleFrom {
+public class CommentForm {
     private Integer id;
     private String name;
     private String content;
 }
-

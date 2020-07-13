@@ -8,6 +8,41 @@
 <form th:action="@{/insert-article}" th:object="${articleForm}">
     <input type="text" th:field="*{name}">
     <textarea th:field="*{content}"></textarea>
+    <input type="submit" value="記事投稿">
 </form>
+
+<div th:if="${!articleList.isEmpty()}" th:each="article:${articleList}">
+    <table>
+        <tr>
+            <th>投稿者名</th>
+            <td th:text="${article.name}"></td>
+        </tr>
+        <tr>
+            <th>投稿内容</th>
+            <td th:text="${article.content}"></td>
+        </tr>
+        <tr>
+            <a th:href="@{/delete-article/{id}(id=${article.id})}">記事削除</a>
+        </tr>
+        <tr>
+            <table th:each="comment:${article.comments}">
+                <tr>
+                    <th>コメント者名</th>
+                    <td th:text="${comment.name}"></td>
+                </tr>
+                <tr>
+                    <th>コメント内容</th>
+                    <td th:text="${comment.content}"></td>
+                </tr>
+            </table>
+
+        </tr>
+    </table>
+    <form th:action="@{insert-comment}" th:object="${commentForm}">
+        <input type="text" th:field="*{name}">
+        <textarea th:field="*{content}"></textarea>
+        <input type="submit" value="コメント投稿">
+    </form>
+</div>
 </body>
 </html>
